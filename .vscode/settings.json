@@ -1,0 +1,17 @@
+{
+  "editor.fontFamily": /*"'NimbusMono PS Bold'"*/"'Fira Mono Nerd Font', 'FiraCode Nerd Font', monospace"*/,
+  "editor.fontSize": 12,  // Tamaño de la fuente en el editor (ajústalo como desees)
+  "editor.fontLigatures": false,
+  "editor.fontWeight": "500",
+
+  // Cambiar la fuente y tamaño en la barra lateral (explorador de archivos)
+  "workbench.tree.indent": 10,  // Ajusta el espaciado en la barra lateral si lo deseas
+  "window.zoomLevel": -0.5,  // Este valor reduce el tamaño general de la interfaz (ajusta según tus preferencias)
+  
+  // Cambiar la fuente en la terminal integrada (si lo necesitas)
+  "terminal.integrated.fontFamily": "'FiraCode Nerd Font', monospace",
+  "terminal.integrated.fontSize": 14, // Ajusta el tamaño de la fuente en la terminal
+  "terminal.integrated.shell.linux":"/usr/bin/alacritty",
+  "terminal.intregrated.shellArgs.linux": ["--hold", "--no-config"]
+}
+
