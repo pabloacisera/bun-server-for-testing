@@ -1,0 +1,7 @@
+{
+  "entryPoints": ["./src"],
+  "out": "./docs",
+  "name": "Mi API",
+  "exclude": ["**/node_modules/**/*", "**/test/**/*"],
+  "entryPointStrategy": "expand"
+}

@@ -3,13 +3,25 @@ import { AuthService } from '../services/authService';
 import { loginSchema, registerSchema } from '../utils/authSchema';
 import { z } from 'zod';
 
+/**
+ * Clase que maneja la lógica de autenticación.
+ */
 export class AuthController {
   private authService: AuthService;
 
+  /**
+   * Constructor de AuthController.
+   * Inicializa una instancia de AuthService.
+   */
   constructor() {
     this.authService = new AuthService();
   }
 
+  /**
+   * Maneja el registro de un nuevo usuario.
+   * @param {Request} req La solicitud HTTP entrante.
+   * @returns {Promise<Response>} La respuesta HTTP con el resultado del registro.
+   */
   async registerUser(req: Request): Promise<Response> {
     try {
       const data = await req.json();
@@ -33,6 +45,11 @@ export class AuthController {
     }
   }
 
+   /**
+   * Maneja el inicio de sesión de un usuario.
+   * @param {Request} req La solicitud HTTP entrante.
+   * @returns {Promise<Response>} La respuesta HTTP con el resultado del inicio de sesión.
+   */
   async loginUser(req: Request): Promise<Response> {
     try {
       const data = await req.json();

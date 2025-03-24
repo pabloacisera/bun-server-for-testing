@@ -3,17 +3,35 @@ import { ProductRouter } from './src/routes/productRouter';
 import type { IRoutes } from './src/interfaces/routesInterface';
 
 // Inicialización
+/**
+ * Punto de entrada principal de la aplicación
+ * Configura el servidor Bun y manjea las solicitudes entrantes
+ */
 const authRouter = new AuthRouter();
 const productRouter = new ProductRouter();
 
 // Combinar rutas con tipo explícito
+
+/**
+ * Conbinación de rutas de autenticación y productos en un solo objeto
+ * @type {IRoutes}
+ */
 const allRoutes: IRoutes = {
   ...authRouter.getRoutes(),
   ...productRouter.getRoutes()
 };
 
+/**
+ * Configuracion del servidor de Bun
+ */
 const server = Bun.serve({
   port: Bun.env.PORT || 3000,
+
+  /**
+   * Maneja las solicitudes entrantes
+   * @param {Request}
+   * @returns {Promise<Response>}
+   */
   async fetch(req: Request) {
     const url = new URL(req.url);
     const routePath = url.pathname;
@@ -40,6 +58,11 @@ const server = Bun.serve({
 
     return new Response('Not Found', { status: 404 });
   },
+  /**
+   * Maneja los errores del servidor
+   * @param {Error} error El error del servidor
+   * @returns {Response}
+   */
   error(error) {
     console.error('Server error:', error);
     return new Response('Internal Server Error', { status: 500 });
