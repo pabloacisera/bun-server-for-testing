@@ -10,9 +10,9 @@ export class ProductRouter {
   }
 
   private handleRoute(handler: (req: Request) => Promise<Response>) {
-    return createRouterHandler(handler.bind(this.productController)), {
-      allowedMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
-    }
+    return createRouterHandler(handler.bind(this.productController), { // <- Paréntesis corregido
+      allowedMethods: ['POST', 'OPTIONS']
+    });
   }
 
   getRoutes() {

@@ -1,12 +1,13 @@
 import { AuthRouter } from './src/routes/authRouter';
 import { ProductRouter } from './src/routes/productRouter';
+import type { IRoutes } from './src/interfaces/routesInterface';
 
-// Inicialización de routers
+// Inicialización
 const authRouter = new AuthRouter();
 const productRouter = new ProductRouter();
 
-// Combinación de todas las rutas
-const allRoutes = {
+// Combinar rutas con tipo explícito
+const allRoutes: IRoutes = {
   ...authRouter.getRoutes(),
   ...productRouter.getRoutes()
 };
@@ -16,30 +17,22 @@ const server = Bun.serve({
   async fetch(req: Request) {
     const url = new URL(req.url);
     const routePath = url.pathname;
-    
-    // Manejo especial para rutas con parámetros (si es necesario)
-    const routeKey = Object.keys(allRoutes).find(key => {
-      // Para rutas simples, comparación directa
-      if (key === routePath) return true;
-      
-      // Aquí podrías añadir lógica para rutas con parámetros
-      // Ejemplo: '/api/products/:id'
-      return false;
-    });
+
+    const routeKey = Object.keys(allRoutes).find(key => key === routePath);
 
     if (routeKey) {
-      const routeHandlers = allRoutes[routeKey as keyof typeof allRoutes];
-      
-      // Si es un objeto con métodos HTTP
+      const routeHandlers = allRoutes[routeKey];
+
       if (typeof routeHandlers === 'object') {
-        const methodHandler = routeHandlers[req.method as keyof typeof routeHandlers];
-        if (methodHandler) {
+        const method = req.method as keyof typeof routeHandlers;
+        const methodHandler = routeHandlers[method];
+
+        if (methodHandler && typeof methodHandler === 'function') {
           return methodHandler(req);
         }
         return new Response('Method Not Allowed', { status: 405 });
       }
-      
-      // Si es una función directa (para compatibilidad con version anterior)
+
       if (typeof routeHandlers === 'function') {
         return routeHandlers(req);
       }

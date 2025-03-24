@@ -9,9 +9,9 @@ export class AuthRouter {
   }
 
   private handleRoute(handler: (req: Request) => Promise<Response>) {
-    return createRouterHandler(handler.bind(this.authController)), {
+    return createRouterHandler(handler.bind(this.authController), { // <- Paréntesis corregido
       allowedMethods: ['POST', 'OPTIONS']
-    }
+    });
   }
   getRoutes() {
     return {
